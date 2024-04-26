@@ -3,14 +3,24 @@ import { Toaster, toast } from "react-hot-toast";
 
 import css from "./SearchBar.module.css";
 
-const SearchBar = ({ onSubmit }) => {
-  const handleSubmit = (values, { resetForm, setSubmitting }) => {
+interface SearchBarProps {
+  onSubmit: (query: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
+  const handleSubmit = (
+    values: { query: string },
+    {
+      resetForm,
+      setSubmitting,
+    }: { resetForm: () => void; setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
     if (!values.query || values.query.trim() === "") {
-      notify(); 
+      notify();
       setSubmitting(false);
       return;
     }
-  
+
     const results = values.query;
     onSubmit(results);
     resetForm();

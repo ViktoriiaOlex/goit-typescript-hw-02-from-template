@@ -6,7 +6,6 @@ import Loader from "./components/Loader/Loader";
 import ImageModal from "./components/ImageModal/ImageModal";
 import ReactModal from "react-modal";
 
-
 import { useState, useEffect, useRef } from "react";
 import { requestPicsByQuery } from "./services/api";
 
@@ -14,18 +13,24 @@ import "./App.css";
 
 ReactModal.setAppElement("#root");
 
-function App() {
-  const [searchQuery, setSearchQuery] = useState(null);
-  const [pics, setPics] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [searchPerformed, setSearchPerformed] = useState(false);
-  const [page, setPage] = useState(1);
-  const [selectedImageUrl, setSelectedImageUrl] = useState(null);
-  const prevSearchQuery = useRef(null);
-  const [hasMore, setHasMore] = useState(true);
+interface Props {}
+export interface PicsResponse {
+  results: Image[];
+  total: number;
+}
 
-  const openModal = (imgUrl) => {
+const App: React.FC<Props> = () => {
+  const [searchQuery, setSearchQuery] = useState<string | null>(null);
+  const [pics, setPics] = useState<Image[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [searchPerformed, setSearchPerformed] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
+  const [selectedImageUrl, setSelectedImageUrl] = useState<string | null>(null);
+  const prevSearchQuery = useRef<string | null>(null);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+
+  const openModal = (imgUrl: string) => {
     setSelectedImageUrl(imgUrl);
   };
 
@@ -33,7 +38,7 @@ function App() {
     setSelectedImageUrl(null);
   };
 
-  const handleSearchSubmit = (query) => {
+  const handleSearchSubmit = (query: string) => {
     setSearchQuery(query);
     setSearchPerformed(true);
     setPage(1);
@@ -96,6 +101,6 @@ function App() {
       )}
     </>
   );
-}
+};
 
 export default App;
